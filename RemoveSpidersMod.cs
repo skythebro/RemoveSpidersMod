@@ -59,10 +59,17 @@ namespace RemoveSpidersMod
 
                 }
                 isDone = true;
+               
             }
             else
             {
-                if (isDone == true) isDone = false;
+                if (isDone == true) {
+                    disableSpawnCounter = 0;
+                    CurrentSpawnCounter = 0;
+                    removeCounter = 0;
+                    isDone = false;
+                }
+                
             }
         }
     }
