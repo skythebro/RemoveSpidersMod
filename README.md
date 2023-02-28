@@ -22,4 +22,6 @@ The MelonLoader console window has extra logging info on what my mod is doing, i
 Every time you load into a game you'll have a few lag spikes the first few seconds.
 This is because my mod is removing all of the webs and making sure that all rocks even new ones will not have any spiders spawning when you pick them up.
 
-
+#### P.S.:
+This is my first ever mod so I hope it does it's job well! 
+If you're a mod maker and know of a better way of doing what my mod does. Release your mod and I'll make sure to put a link on my repo to yours. ♥
