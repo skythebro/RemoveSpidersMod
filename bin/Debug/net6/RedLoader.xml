@@ -1,0 +1,1247 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RedLoader</name>
+    </assembly>
+    <members>
+        <member name="M:RedLoader.Preloader.Core.AssemblyBuildInfo.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:RedLoader.Preloader.Core.EnvVars">
+            <summary>
+                Doorstop environment variables, passed into the Redloader preloader.
+                <para>https://github.com/NeighTools/UnityDoorstop/wiki#environment-variables</para>
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.EnvVars.DOORSTOP_INVOKE_DLL_PATH">
+            <summary>
+                Path to the assembly that was invoked via Doorstop. Contains the same value as in "targetAssembly" configuration
+                option in the config file.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.EnvVars.DOORSTOP_MANAGED_FOLDER_DIR">
+            <summary>
+                Full path to the game's "Managed" folder that contains all the game's managed assemblies
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.EnvVars.DOORSTOP_PROCESS_PATH">
+            <summary>
+                Full path to the game executable currently running.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.EnvVars.DOORSTOP_DLL_SEARCH_DIRS">
+            <summary>
+                Array of paths where Mono searches DLLs from before assembly resolvers are invoked.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.EnvVars.DOORSTOP_MONO_LIB_PATH">
+            <summary>
+                Path of the DLL that contains mono imports.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.AssemblyPatcher">
+            <summary>
+                Worker class which is used for loading and patching entire folders of assemblies, or alternatively patching and
+                loading assemblies one at a time.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.AssemblyPatcher.PatcherContext">
+            <summary>
+                The context of this assembly patcher instance that is passed to all patcher plugins.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.AssemblyPatcher.PatcherPluginsSafe">
+            <summary>
+                A cloned version of <see cref="!:PatcherPlugins" /> to ensure that any foreach loops do not break when the collection
+                gets modified.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.AssemblyPatcher.Dispose">
+            <summary>
+                Performs work to dispose collection objects.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.AssemblyPatcher.AddPatchersFromDirectory(System.String)">
+            <summary>
+                Adds all patchers from all managed assemblies specified in a directory.
+            </summary>
+            <param name="directory">Directory to search patcher DLLs from.</param>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.AssemblyPatcher.LoadAssemblyDirectories(System.String[])">
+            <summary>
+                Adds all .dll assemblies in given directories to be patched and loaded by this patcher instance. Non-managed
+                assemblies
+                are skipped.
+            </summary>
+            <param name="directories">The directories to search.</param>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.AssemblyPatcher.LoadAssemblyDirectories(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+                Adds all assemblies in given directories to be patched and loaded by this patcher instance. Non-managed assemblies
+                are
+                skipped.
+            </summary>
+            <param name="directories">The directory to search.</param>
+            <param name="assemblyExtensions">The file extensions to attempt to load.</param>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.AssemblyPatcher.TryLoadAssembly(System.String,Mono.Cecil.AssemblyDefinition@)">
+            <summary>
+                Attempts to load a managed assembly as an <see cref="T:Mono.Cecil.AssemblyDefinition" />. Returns true if successful.
+            </summary>
+            <param name="path">The path of the assembly.</param>
+            <param name="assembly">The loaded assembly. Null if not successful in loading.</param>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.AssemblyPatcher.PatchAndLoad">
+            <summary>
+                Applies patchers to all assemblies loaded into this assembly patcher and then loads patched assemblies into memory.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.PatcherPluginInfoAttribute">
+            <summary>
+                This attribute denotes that a class is a patcher plugin, and specifies the required metadata.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.PatcherPluginInfoAttribute.#ctor(System.String,System.String,System.String)">
+            <param name="GUID">The unique identifier of the plugin. Should not change between plugin versions.</param>
+            <param name="Name">The user friendly name of the plugin. Is able to be changed between versions.</param>
+            <param name="Version">The specific version of the plugin.</param>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherPluginInfoAttribute.GUID">
+            <summary>
+                The unique identifier of the plugin. Should not change between plugin versions.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherPluginInfoAttribute.Name">
+            <summary>
+                The user friendly name of the plugin. Is able to be changed between versions.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherPluginInfoAttribute.Version">
+            <summary>
+                The specific version of the plugin.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.TargetAssemblyAttribute">
+            <summary>
+                Defines an assembly that a patch method will target.
+            </summary>
+        </member>
+        <member name="F:RedLoader.Preloader.Core.Patching.TargetAssemblyAttribute.AllAssemblies">
+            <summary>
+                Marker used to indicate all possible assemblies to be targeted by a patch method.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.TargetAssemblyAttribute.#ctor(System.String)">
+            <param name="targetAssembly">
+                The short filename of the assembly. Use <see cref="F:RedLoader.Preloader.Core.Patching.TargetAssemblyAttribute.AllAssemblies" /> to mark all possible
+                assemblies as targets.
+            </param>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.TargetAssemblyAttribute.TargetAssembly">
+            <summary>
+                The short filename of the assembly to target.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.TargetTypeAttribute">
+            <summary>
+                Defines a type that a patch method will target.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.TargetTypeAttribute.#ctor(System.String,System.String)">
+            <param name="targetAssembly">The short filename of the assembly of which <paramref name="targetType" /> belongs to.</param>
+            <param name="targetType">The full name of the type to target for patching.</param>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.TargetTypeAttribute.TargetAssembly">
+            <summary>
+                The short filename of the assembly to target.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.TargetTypeAttribute.TargetType">
+            <summary>
+                The full name of the type to target for patching.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.BasePatcher">
+            <summary>
+                A patcher that can contain multiple methods for patching assemblies.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.BasePatcher.Info">
+            <summary>
+                Metadata associated with this patcher plugin.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.BasePatcher.Context">
+            <summary>
+                The context of the <see cref="T:RedLoader.Preloader.Core.Patching.AssemblyPatcher" /> this BasePatcher is associated with.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.BasePatcher.Initialize">
+            <summary>
+                Executed before any patches from any plugin are applied.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.BasePatcher.Finalizer">
+            <summary>
+                Executed after all patches from all plugins have been applied.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.PatchDefinition">
+            <summary>
+                A definition of an individual patch for use by <see cref="T:RedLoader.Preloader.Core.Patching.AssemblyPatcher" />.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatchDefinition.TargetAssembly">
+            <summary>
+                The assembly / assemblies this patch will target, if there any.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatchDefinition.TargetType">
+            <summary>
+                The type / types this patch will target, if there are any.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatchDefinition.Instance">
+            <summary>
+                The instance of the <see cref="T:RedLoader.Preloader.Core.Patching.BasePatcher" /> this <see cref="T:RedLoader.Preloader.Core.Patching.PatchDefinition" /> originates from.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatchDefinition.MethodInfo">
+            <summary>
+                The method that will perform the patching logic defined by this <see cref="T:RedLoader.Preloader.Core.Patching.PatchDefinition" /> instance.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatchDefinition.FullName">
+            <summary>
+                A friendly name for this patch definition, for use in logging and error tracking.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Preloader.Core.Patching.PatcherContext">
+            <summary>
+                Context provided to patcher plugins from the associated patcher engine.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherContext.AvailableAssemblies">
+            <summary>
+                <para>Contains a list of assemblies that will be patched and loaded into the runtime.</para>
+                <para>
+                    The dictionary has the name of the file, without any directories. These are used by the dumping
+                    functionality, and as such, these are also required to be unique. They do not have to be exactly the same as
+                    the real filename, however they have to be mapped deterministically.
+                </para>
+                <para>Order is not respected, as it will be sorted by dependencies.</para>
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherContext.AvailableAssembliesPaths">
+            <summary>
+                <para>Contains a mapping of available assembly name to their original filenames.</para>
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherContext.LoadedAssemblies">
+            <summary>
+                <para>Contains a dictionary of assemblies that have been loaded as part of executing this assembly patcher.</para>
+                <para>
+                    The key is the same key as used in <see cref="P:RedLoader.Preloader.Core.Patching.PatcherContext.LoadedAssemblies" />, while the value is the actual assembly
+                    itself.
+                </para>
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherContext.PatcherPlugins">
+            <summary>
+                A list of plugins that will be initialized and executed, in the order of the list.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherContext.PatchDefinitions">
+            <summary>
+                A list of individual patches that <see cref="T:RedLoader.Preloader.Core.Patching.AssemblyPatcher" /> will execute, generated by parsing
+                <see cref="P:RedLoader.Preloader.Core.Patching.PatcherContext.PatcherPlugins" />.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:RedLoader.Preloader.Core.Patching.PatcherContext.DumpedAssembliesPath" -->
+        <member name="T:RedLoader.Preloader.Core.Patching.PatcherPluginMetadata">
+            <summary>
+                A single cached assembly patcher.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Preloader.Core.Patching.PatcherPluginMetadata.TypeName">
+            <summary>
+                Type name of the patcher.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.PatcherPluginMetadata.Save(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:RedLoader.Preloader.Core.Patching.PatcherPluginMetadata.Load(System.IO.BinaryReader)">
+            <inheritdoc />
+        </member>
+        <member name="M:RedLoader.Preloader.Core.PlatformUtils.SetPlatform">
+            <summary>
+                Recreation of MonoMod's PlatformHelper.DeterminePlatform method, but with libc calls instead of creating processes.
+            </summary>
+        </member>
+        <member name="P:RedLoader.MelonInfoAttribute.SystemType">
+            <summary>
+            System.Type of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.MelonInfoAttribute.Name">
+            <summary>
+            Name of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.MelonInfoAttribute.Version">
+            <summary>
+            Version of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.MelonInfoAttribute.Author">
+            <summary>
+            Author of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.MelonInfoAttribute.DownloadLink">
+            <summary>
+            Download Link of the Melon.
+            </summary>
+        </member>
+        <member name="M:RedLoader.MelonInfoAttribute.#ctor(System.Type,System.String,System.String,System.String,System.String)">
+            <summary>
+            MelonInfo constructor.
+            </summary>
+            <param name="type">The main Melon type of the Melon (for example TestMod)</param>
+            <param name="name">Name of the Melon</param>
+            <param name="version">Version of the Melon</param>
+            <param name="author">Author of the Melon</param>
+            <param name="downloadLink">URL to the download link of the mod [optional]</param>
+        </member>
+        <member name="M:RedLoader.MelonInfoAttribute.#ctor(System.Type,System.String,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            MelonInfo constructor.
+            </summary>
+            <param name="type">The main Melon type of the Melon (for example TestMod)</param>
+            <param name="name">Name of the Melon</param>
+            <param name="versionMajor">Version Major of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="versionMinor">Version Minor of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="versionRevision">Version Revision of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="versionIdentifier">Version Identifier of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="author">Author of the Melon</param>
+            <param name="downloadLink">URL to the download link of the mod [optional]</param>
+        </member>
+        <member name="M:RedLoader.MelonInfoAttribute.#ctor(System.Type,System.String,System.Int32,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            MelonInfo constructor.
+            </summary>
+            <param name="type">The main Melon type of the Melon (for example TestMod)</param>
+            <param name="name">Name of the Melon</param>
+            <param name="versionMajor">Version Major of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="versionMinor">Version Minor of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="versionRevision">Version Revision of the Melon (Using the <see href="https://semver.org">Semantic Versioning</see> format)</param>
+            <param name="author">Author of the Melon</param>
+            <param name="downloadLink">URL to the download link of the mod [optional]</param>
+        </member>
+        <member name="E:RedLoader.Bootstrap.BaseChainloader.Finished">
+            <summary>
+                Occurs after all plugins are loaded.
+            </summary>
+        </member>
+        <member name="F:RedLoader.Bootstrap.BaseChainloader.ModProcessor">
+            <summary>
+            Preprocess the plugins and modify the load order.
+            </summary>
+            <remarks>Some plugins may be skipped if they cannot be loaded (wrong metadata, etc).</remarks>
+            <param name="plugins">Plugins to process.</param>
+            <returns>List of plugins to load in the correct load order.</returns>
+        </member>
+        <member name="M:RedLoader.Bootstrap.BaseChainloader.Execute">
+            <summary>
+            Run the chainloader and load all plugins from the plugins folder.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Bootstrap.BaseChainloader.TryRunModuleCtor(RedLoader.ModBase,System.Reflection.Assembly)">
+            <summary>
+            Detects and loads all plugins in the specified directories.
+            </summary>
+            <remarks>
+            It is better to collect all paths at once and use a single call to LoadPlugins than multiple calls.
+            This allows to run proper dependency resolving and to load all plugins in one go.
+            </remarks>
+            <param name="pluginsPaths">Directories to search the plugins from.</param>
+            <returns>List of loaded plugin infos.</returns>
+        </member>
+        <member name="T:RedLoader.Bootstrap.ICacheable">
+            <summary>
+                A cacheable metadata item. Can be used with <see cref="M:RedLoader.Bootstrap.TypeLoader.LoadAssemblyCache``1(System.String)" /> and
+                <see cref="M:RedLoader.Bootstrap.TypeLoader.SaveAssemblyCache``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{``0}},System.Collections.Generic.Dictionary{System.String,System.String})" /> to cache plugin metadata.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Bootstrap.ICacheable.Save(System.IO.BinaryWriter)">
+            <summary>
+                Serialize the object into a binary format.
+            </summary>
+            <param name="bw"></param>
+        </member>
+        <member name="M:RedLoader.Bootstrap.ICacheable.Load(System.IO.BinaryReader)">
+            <summary>
+                Loads the object from binary format.
+            </summary>
+            <param name="br"></param>
+        </member>
+        <member name="T:RedLoader.Bootstrap.CachedAssembly`1">
+            <summary>
+                A cached assembly.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:RedLoader.Bootstrap.CachedAssembly`1.CacheItems">
+            <summary>
+                List of cached items inside the assembly.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Bootstrap.CachedAssembly`1.Hash">
+            <summary>
+                Hash of the assembly. Used to verify that the assembly hasn't been changed.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Bootstrap.TypeLoader">
+            <summary>
+                Provides methods for loading specified types from an assembly.
+            </summary>
+        </member>
+        <member name="F:RedLoader.Bootstrap.TypeLoader.CecilResolver">
+            <summary>
+                Default assembly resolved used by the <see cref="T:RedLoader.Bootstrap.TypeLoader" />
+            </summary>
+        </member>
+        <member name="F:RedLoader.Bootstrap.TypeLoader.ReaderParameters">
+            <summary>
+                Default reader parameters used by <see cref="T:RedLoader.Bootstrap.TypeLoader" />
+            </summary>
+        </member>
+        <member name="E:RedLoader.Bootstrap.TypeLoader.AssemblyResolve">
+            <summary>
+                Event fired when <see cref="T:RedLoader.Bootstrap.TypeLoader" /> fails to resolve a type during type loading.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Bootstrap.TypeLoader.FindPluginTypes``1(System.String,System.Func{Mono.Cecil.TypeDefinition,System.String,``0},System.Func{Mono.Cecil.AssemblyDefinition,System.Boolean},System.String)">
+            <summary>
+                Looks up assemblies in the given directory and locates all types that can be loaded and collects their metadata.
+            </summary>
+            <typeparam name="T">The specific base type to search for.</typeparam>
+            <param name="directory">The directory to search for assemblies.</param>
+            <param name="typeSelector">A function to check if a type should be selected and to build the type metadata.</param>
+            <param name="assemblyFilter">A filter function to quickly determine if the assembly can be loaded.</param>
+            <param name="cacheName">The name of the cache to get cached types from.</param>
+            <returns>
+                A dictionary of all assemblies in the directory and the list of type metadatas of types that match the
+                selector.
+            </returns>
+        </member>
+        <member name="M:RedLoader.Bootstrap.TypeLoader.LoadAssemblyCache``1(System.String)">
+            <summary>
+                Loads an index of type metadatas from a cache.
+            </summary>
+            <param name="cacheName">Name of the cache</param>
+            <typeparam name="T">Cacheable item</typeparam>
+            <returns>
+                Cached type metadatas indexed by the path of the assembly that defines the type. If no cache is defined,
+                return null.
+            </returns>
+        </member>
+        <member name="M:RedLoader.Bootstrap.TypeLoader.SaveAssemblyCache``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{``0}},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Saves indexed type metadata into a cache.
+            </summary>
+            <param name="cacheName">Name of the cache</param>
+            <param name="entries">List of plugin metadatas indexed by the path to the assembly that contains the types</param>
+            <param name="hashes">Hash values that can be used for checking similarity between cached and live assembly</param>
+            <typeparam name="T">Cacheable item</typeparam>
+        </member>
+        <member name="M:RedLoader.Bootstrap.TypeLoader.TypeLoadExceptionToString(System.Reflection.ReflectionTypeLoadException)">
+            <summary>
+                Converts TypeLoadException to a readable string.
+            </summary>
+            <param name="ex">TypeLoadException</param>
+            <returns>Readable representation of the exception</returns>
+        </member>
+        <member name="M:RedLoader.Unity.IL2CPP.IL2CPPChainloader.AddUnityComponent``1">
+            <summary>
+                Register and add a Unity Component (for example MonoBehaviour) into Redloader global manager.
+                Automatically registers the type with Il2Cpp type system if it isn't initialised already.
+            </summary>
+            <typeparam name="T">Type of the component to add.</typeparam>
+        </member>
+        <member name="M:RedLoader.Unity.IL2CPP.IL2CPPChainloader.AddUnityComponent(System.Type)">
+            <summary>
+                Register and add a Unity Component (for example MonoBehaviour) into BepInEx global manager.
+                Automatically registers the type with Il2Cpp type system if it isn't initialised already.
+            </summary>
+            <param name="t">Type of the component to add</param>
+        </member>
+        <member name="M:RedLoader.Unity.IL2CPP.IL2CPPChainloader.Initialize(System.String)">
+            <summary>
+                Occurs after a plugin is instantiated and just before <see cref="!:BasePlugin.Load"/> is called.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Unity.Common.UnityInfo">
+            <summary>
+                Various information about the currently executing Unity player.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Unity.Common.UnityInfo.PlayerPath">
+            <summary>
+                Path to the player executable.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Unity.Common.UnityInfo.GameDataPath">
+            <summary>
+                Path to the game data directory (directory that contains the game assets).
+            </summary>
+        </member>
+        <member name="P:RedLoader.Unity.Common.UnityInfo.Version">
+            <summary>
+                Version of the Unity player
+            </summary>
+            <remarks>
+                Because BepInEx can execute very early, the exact Unity version might not be available in early
+                bootstrapping phases. The version should be treated as an estimation of the actual version of the Unity player.
+            </remarks>
+        </member>
+        <member name="P:RedLoader.ConsoleManager.ConsoleActive">
+            <summary>
+                True if an external console has been started, false otherwise.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ConsoleManager.StandardOutStream">
+            <summary>
+                The stream that writes to the standard out stream of the process. Should never be null.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ConsoleManager.ConsoleStream">
+            <summary>
+                The stream that writes to an external console. Null if no such console exists
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnPreInitialization">
+            <summary>
+            Called after all MelonPlugins are initialized.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnApplicationEarlyStart">
+            <summary>
+            Called after Game Initialization, before OnApplicationStart and before Assembly Generation on Il2Cpp games.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnPreSupportModule">
+            <summary>
+            Called after all MelonMods are initialized and before the right Support Module is loaded.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnApplicationStart">
+            <summary>
+            Called after all RedLoader components are fully initialized (including all MelonMods).
+            <para>Don't use this event to initialize your Melons anymore! Instead, override <see cref="M:RedLoader.ModBase.OnInitializeMod"/>.</para>
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnApplicationLateStart">
+            <summary>
+            Called when the first 'Start' Unity Messages are invoked.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnApplicationDefiniteQuit">
+            <summary>
+            Called before the Application is closed. It is not possible to prevent the game from closing at this point.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnApplicationQuit">
+            <summary>
+            Called on a quit request. It is possible to abort the request in this callback.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnUpdate">
+            <summary>
+            Called once per frame.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnFixedUpdate">
+            <summary>
+            Called every 0.02 seconds, unless Time.fixedDeltaTime has a different Value. It is recommended to do all important Physics calculations inside this Callback.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnLateUpdate">
+            <summary>
+            Called once per frame, after <see cref="F:RedLoader.GlobalEvents.OnUpdate"/>.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnGUI">
+            <summary>
+            Called at every IMGUI event. Only use this for drawing IMGUI Elements.
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnSceneWasLoaded">
+            <summary>
+            Called when a new Scene is loaded.
+            <para>
+            Arguments:
+            <br><see cref="T:System.Int32"/>: Build Index of the Scene.</br>
+            <br><see cref="T:System.String"/>: Name of the Scene.</br>
+            </para>
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnSceneWasInitialized">
+            <summary>
+            Called once a Scene is initialized.
+            <para>
+            Arguments:
+            <br><see cref="T:System.Int32"/>: Build Index of the Scene.</br>
+            <br><see cref="T:System.String"/>: Name of the Scene.</br>
+            </para>
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnSceneWasUnloaded">
+            <summary>
+            Called once a Scene unloads.
+            <para>
+            Arguments:
+            <br><see cref="T:System.Int32"/>: Build Index of the Scene.</br>
+            <br><see cref="T:System.String"/>: Name of the Scene.</br>
+            </para>
+            </summary>
+        </member>
+        <member name="F:RedLoader.GlobalEvents.OnPreModsLoaded">
+            <summary>
+            Called before MelonMods are loaded from the Mods folder.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Utils.LoaderEnvironment">
+            <summary>
+                Loader environment information
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.LoaderDirectory">
+            <summary>
+            Path of {gameroot}/{loader}/
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.GameRootDirectory">
+            <summary>
+            Path of the directory where the game executable is located
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.GameExecutableName">
+            <summary>
+            Name of the executable without the extension
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.CoreModDirectory">
+            <summary>
+            Directory of the core mods
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.LoaderFolderName">
+            <summary>
+            The folder name of the loader
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.RedloaderVersion">
+            <summary>
+               Redloader version.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.CachePath">
+            <summary>
+                The path to temporary cache files.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.PatcherPluginPath">
+            <summary>
+                The path to the patcher plugin folder which resides in the Redloader folder.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utils.LoaderEnvironment.DllSearchPaths">
+            <summary>
+                List of directories from where Mono will search assemblies before assembly resolving is invoked.
+            </summary>
+        </member>
+        <member name="T:RedLoader.Utils.BufferedAdder`1">
+            <summary>
+            Only processes items when a certain condition is met.
+            Otherwise it will buffer them until the condition is met.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:RedLoader.Utils.BufferedAdder`1.#ctor(System.Func{System.Boolean},System.Action{`0})">
+            <summary>
+            </summary>
+            <param name="canAddFunc">The function to determine if an item can be added</param>
+            <param name="addFunc">The processing function</param>
+        </member>
+        <member name="M:RedLoader.Utils.BufferedAdder`1.Flush">
+            <summary>
+            Process all items that are currently in the buffer and clear the buffer
+            </summary>
+        </member>
+        <member name="T:RedLoader.Utils.CodeWriter">
+            <summary>
+            Helper class for writing code to files
+            </summary>
+        </member>
+        <member name="T:RedLoader.Utils.FileWriter">
+            <summary>
+            Helper class for writing text to files
+            </summary>
+        </member>
+        <member name="T:RedLoader.Utils.MetadataHelper">
+            <summary>
+                Helper class to use for retrieving metadata about a plugin, defined as attributes.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Utils.MetadataHelper.GetAttributes``1(System.Type)">
+            <summary>
+                Gets the specified attributes of a type, if they exist.
+            </summary>
+            <typeparam name="T">The attribute type to retrieve.</typeparam>
+            <param name="pluginType">The plugin type.</param>
+            <returns>The attributes of the type, if existing.</returns>
+        </member>
+        <member name="M:RedLoader.Utils.MetadataHelper.GetAttributes``1(System.Reflection.Assembly)">
+            <summary>
+                Gets the specified attributes of an assembly, if they exist.
+            </summary>
+            <param name="assembly">The assembly.</param>
+            <typeparam name="T">The attribute type to retrieve.</typeparam>
+            <returns>The attributes of the type, if existing.</returns>
+        </member>
+        <member name="M:RedLoader.Utils.MetadataHelper.GetAttributes``1(System.Object)">
+            <summary>
+                Gets the specified attributes of an instance, if they exist.
+            </summary>
+            <typeparam name="T">The attribute type to retrieve.</typeparam>
+            <param name="plugin">The plugin instance.</param>
+            <returns>The attributes of the instance, if existing.</returns>
+        </member>
+        <member name="M:RedLoader.Utils.MetadataHelper.GetAttributes``1(System.Reflection.MemberInfo)">
+            <summary>
+                Gets the specified attributes of a reflection metadata type, if they exist.
+            </summary>
+            <typeparam name="T">The attribute type to retrieve.</typeparam>
+            <param name="member">The reflection metadata instance.</param>
+            <returns>The attributes of the instance, if existing.</returns>
+        </member>
+        <member name="F:RedLoader.ModBase.OnMelonRegistered">
+            <summary>
+            Called once a Melon is fully registered.
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnMelonUnregistered">
+            <summary>
+            Called when a Melon unregisters.
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnMelonInitializing">
+            <summary>
+            Called before a Melon starts initializing.
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnRegister">
+            <summary>
+            Creates a new Melon instance for a Wrapper.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.ModAssembly">
+            <summary>
+            MelonAssembly of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.Priority">
+            <summary>
+            Priority of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.ConsoleColor">
+            <summary>
+            Console Color of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.AuthorConsoleColor">
+            <summary>
+            Console Color of the Author that made this melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.Info">
+            <summary>
+            Info Attribute of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.SupportedGameVersion">
+            <summary>
+            Game Version Attributes of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.OptionalDependencies">
+            <summary>
+            Optional Dependencies Attribute of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.HarmonyInstance">
+            <summary>
+            Auto-Created Harmony Instance of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.LoggerInstance">
+            <summary>
+            Auto-Created MelonLogger Instance of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.ID">
+            <summary>
+            Optional ID of the Melon.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.Description">
+            <summary>
+            Description of the Mod.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.Registered">
+            <summary>
+            <see langword="true"/> if the Melon is registered.
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnUpdateCallback">
+            <summary>
+            Method that gets called on update (every frame). See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html">Update</see>
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnLateUpdateCallback">
+            <summary>
+            Method that gets called on late update (every frame). See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.LateUpdate.html">LateUpdate</see>
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnFixedUpdateCallback">
+            <summary>
+            Method that gets called on fixed update. See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html">FixedUpdate</see>
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.OnGUICallback">
+            <summary>
+            Method that gets called on GUI update. See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnGUI.html">OnGUI</see>
+            </summary>
+        </member>
+        <member name="F:RedLoader.ModBase.HarmonyPatchAll">
+            <summary>
+            If true the loader will automatically apply all harmony patches in the assembly.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModBase.MelonTypeName">
+            <summary>
+            Name of the current Melon Type.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnPreSupportModule">
+            <summary>
+            Runs before Support Module Initialization and after Assembly Generation for Il2Cpp Games.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnApplicationQuit">
+            <summary>
+            Runs on a quit request. It is possible to abort the request in this callback.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnPreferencesSaved">
+            <summary>
+            Runs when Melon Preferences get saved.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnPreferencesSaved(System.String)">
+            <summary>
+            Runs when Melon Preferences get saved. Gets passed the Preferences's File Path.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnPreferencesLoaded">
+            <summary>
+            Runs when Melon Preferences get loaded.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnPreferencesLoaded(System.String)">
+            <summary>
+            Runs when Melon Preferences get loaded. Gets passed the Preferences's File Path.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnEarlyInitializeMelon">
+            <summary>
+            Runs when the Melon is registered. Executed before the Melon's info is printed to the console. This callback should only be used a constructor for the Melon.
+            </summary>
+            <remarks>
+            Please note that this callback may run before the Support Module is loaded.
+            <br>As a result, using unhollowed assemblies may not be possible yet and you would have to override <see cref="M:RedLoader.ModBase.OnInitializeMod"/> instead.</br>
+            </remarks>
+        </member>
+        <member name="M:RedLoader.ModBase.OnInitializeMod">
+            <summary>
+            Runs after the Mod has registered. This callback waits until the loader has fully initialized (<see cref="F:RedLoader.GlobalEvents.OnApplicationStart"/>).
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnLateInitializeMod">
+            <summary>
+            Runs after <see cref="M:RedLoader.ModBase.OnInitializeMod"/>. This callback waits until Unity has invoked the first 'Start' messages (<see cref="F:RedLoader.GlobalEvents.OnApplicationLateStart"/>).
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.OnDeinitializeMod">
+            <summary>
+            Runs when the mod is unregistered. Also runs before the Application is closed (<see cref="F:RedLoader.GlobalEvents.OnApplicationDefiniteQuit"/>).
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.Register">
+            <summary>
+            Registers the Melon.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.FindMelon(System.String,System.String)">
+            <summary>
+            Tries to find a registered Melon that matches the given Info.
+            </summary>
+        </member>
+        <member name="M:RedLoader.ModBase.Unregister(System.String,System.Boolean)">
+            <summary>
+            Unregisters the Melon and all other Melons located in the same Assembly.
+            <para>This only unsubscribes the Melons from all Callbacks/<see cref="T:RedLoader.MelonEvent"/>s and unpatches all Methods that were patched by Harmony, but doesn't actually unload the whole Assembly.</para>
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModTypeBase`1.RegisteredMods">
+            <summary>
+            List of registered <typeparamref name="T"/>s.
+            </summary>
+        </member>
+        <member name="P:RedLoader.ModTypeBase`1.TypeName">
+            <summary>
+            A Human-Readable Name for <typeparamref name="T"/>.
+            </summary>
+        </member>
+        <member name="F:RedLoader.ConfigEntry.DontRegisterChanges">
+            <summary>
+            Doesn't set the HasChanged flag when set to true
+            </summary>
+        </member>
+        <member name="F:RedLoader.ConfigEntry`1.OnValueChanged">
+            <summary>
+            Called when the value is changed. The first parameter is the old value, the second is the new value.
+            </summary>
+        </member>
+        <member name="F:RedLoader.ConfigSystem.OnPreferencesLoaded">
+            <summary>
+            Occurs when a Preferences File has been loaded.
+            <para>
+            <see cref="T:System.String"/>: Path of the Preferences File.
+            </para>
+            </summary>
+        </member>
+        <member name="F:RedLoader.ConfigSystem.OnPreferencesSaved">
+            <summary>
+            Occurs when a Preferences File has been saved.
+            <para>
+            <see cref="T:System.String"/>: Path of the Preferences File.
+            </para>
+            </summary>
+        </member>
+        <member name="M:RedLoader.ConfigSystem.GetFilePath(System.String)">
+            <summary>
+            Gets the absulute path of a Preferences File.
+            </summary>
+            <param name="fileName">Filename relative to the userdata path</param>
+            <returns>The absolute filepath</returns>
+        </member>
+        <member name="M:RedLoader.ConfigSystem.CreateFileCategory(System.String,System.String,System.String)">
+            <summary>
+            Create a new category which will be saved to a custom file.
+            </summary>
+            <param name="identifier"></param>
+            <param name="display_name"></param>
+            <param name="file_name">The relative filepath</param>
+            <returns></returns>
+        </member>
+        <member name="P:RedLoader.CorePreferences.ReadableExceptions">
+            <summary>
+            Makes the exceptions more readable.
+            </summary>
+            <config>Readable Exceptions</config>
+            <type>bool</type>
+        </member>
+        <member name="P:RedLoader.CorePreferences.DisableNotifications">
+            <summary>
+            Disable the popup notifications.
+            </summary>
+            <config>Disable Notifications</config>
+            <type>bool</type>
+        </member>
+        <member name="P:RedLoader.CorePreferences.AutoFixReshade">
+            <summary>
+            Automatically rename dxgi.dll in the game folder to make Redloader able to load Reshade.
+            </summary>
+            <config>Auto Fix Reshade</config>
+            <type>bool</type>
+        </member>
+        <member name="T:RedLoader.Utility">
+            <summary>
+                Generic helper properties and methods.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utility.CLRSupportsDynamicAssemblies">
+            <summary>
+                Whether current Common Language Runtime supports dynamic method generation using
+                <see cref="N:System.Reflection.Emit" /> namespace.
+            </summary>
+        </member>
+        <member name="P:RedLoader.Utility.UTF8NoBom">
+            <summary>
+                An encoding for UTF-8 which does not emit a byte order mark (BOM).
+            </summary>
+        </member>
+        <member name="M:RedLoader.Utility.TryDo(System.Action,System.Exception@)">
+            <summary>
+                Try to perform an action.
+            </summary>
+            <param name="action">Action to perform.</param>
+            <param name="exception">Possible exception that gets returned.</param>
+            <returns>True, if action succeeded, false if an exception occured.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.CombinePaths(System.String[])">
+            <summary>
+                Combines multiple paths together, as the specific method is not available in .NET 3.5.
+            </summary>
+            <param name="parts">The multiple paths to combine together.</param>
+            <returns>A combined path.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.ParentDirectory(System.String,System.Int32)">
+            <summary>
+                Returns the parent directory of a path, optionally specifying the amount of levels.
+            </summary>
+            <param name="path">The path to get the parent directory of.</param>
+            <param name="levels">The amount of levels to traverse. Defaults to 1</param>
+            <returns>The parent directory.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.SafeParseBool(System.String,System.Boolean)">
+            <summary>
+                Tries to parse a bool, with a default value if unable to parse.
+            </summary>
+            <param name="input">The string to parse</param>
+            <param name="defaultValue">The value to return if parsing is unsuccessful.</param>
+            <returns>Boolean value of input if able to be parsed, otherwise default value.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.ConvertToWWWFormat(System.String)">
+            <summary>
+                Converts a file path into a UnityEngine.WWW format.
+            </summary>
+            <param name="path">The file path to convert.</param>
+            <returns>A converted file path.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.IsNullOrWhiteSpace(System.String)">
+            <summary>
+                Indicates whether a specified string is null, empty, or consists only of white-space characters.
+            </summary>
+            <param name="self">The string to test.</param>
+            <returns>True if the value parameter is null or empty, or if value consists exclusively of white-space characters.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.TopologicalSort``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+                Sorts a given dependency graph using a direct toposort, reporting possible cyclic dependencies.
+            </summary>
+            <param name="nodes">Nodes to sort</param>
+            <param name="dependencySelector">Function that maps a node to a collection of its dependencies.</param>
+            <typeparam name="TNode">Type of the node in a dependency graph.</typeparam>
+            <returns>Collection of nodes sorted in the order of least dependencies to the most.</returns>
+            <exception cref="T:System.Exception">Thrown when a cyclic dependency occurs.</exception>
+        </member>
+        <member name="M:RedLoader.Utility.TryResolveDllAssembly``1(System.Reflection.AssemblyName,System.String,System.Func{System.String,``0},``0@)">
+            <summary>
+                Try to resolve and load the given assembly DLL.
+            </summary>
+            <param name="assemblyName">Name of the assembly, of the type <see cref="T:System.Reflection.AssemblyName" />.</param>
+            <param name="directory">Directory to search the assembly from.</param>
+            <param name="assembly">The loaded assembly.</param>
+            <returns>True, if the assembly was found and loaded. Otherwise, false.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.IsSubtypeOf(Mono.Cecil.TypeDefinition,System.Type)">
+            <summary>
+                Checks whether a given cecil type definition is a subtype of a provided type.
+            </summary>
+            <param name="self">Cecil type definition</param>
+            <param name="td">Type to check against</param>
+            <returns>Whether the given cecil type is a subtype of the type.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.TryResolveDllAssembly(System.Reflection.AssemblyName,System.String,System.Reflection.Assembly@)">
+            <summary>
+                Try to resolve and load the given assembly DLL.
+            </summary>
+            <param name="assemblyName">Name of the assembly, of the type <see cref="T:System.Reflection.AssemblyName" />.</param>
+            <param name="directory">Directory to search the assembly from.</param>
+            <param name="assembly">The loaded assembly.</param>
+            <returns>True, if the assembly was found and loaded. Otherwise, false.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.TryResolveDllAssembly(System.Reflection.AssemblyName,System.String,Mono.Cecil.ReaderParameters,Mono.Cecil.AssemblyDefinition@)">
+            <summary>
+                Try to resolve and load the given assembly DLL.
+            </summary>
+            <param name="assemblyName">Name of the assembly, of the type <see cref="T:System.Reflection.AssemblyName" />.</param>
+            <param name="directory">Directory to search the assembly from.</param>
+            <param name="readerParameters">Reader parameters that contain possible custom assembly resolver.</param>
+            <param name="assembly">The loaded assembly.</param>
+            <returns>True, if the assembly was found and loaded. Otherwise, false.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.TryOpenFileStream(System.String,System.IO.FileMode,System.IO.FileStream@,System.IO.FileAccess,System.IO.FileShare)">
+            <summary>
+                Tries to create a file with the given name
+            </summary>
+            <param name="path">Path of the file to create</param>
+            <param name="mode">File open mode</param>
+            <param name="fileStream">Resulting filestream</param>
+            <param name="access">File access options</param>
+            <param name="share">File share options</param>
+            <returns></returns>
+        </member>
+        <member name="M:RedLoader.Utility.HashStream(System.IO.Stream)">
+            <summary>
+                Compute a MD5 hash of the given stream.
+            </summary>
+            <param name="stream">Stream to hash</param>
+            <returns>MD5 hash as a hex string</returns>
+        </member>
+        <member name="M:RedLoader.Utility.HashStrings(System.String[])">
+            <summary>
+            Hash a list of strings using MD5
+            </summary>
+            <param name="strings">Strings to hash</param>
+            <returns>MD5 of the strings</returns>
+        </member>
+        <member name="M:RedLoader.Utility.ByteArrayToString(System.Byte[])">
+            <summary>
+                Convert the given array to a hex string.
+            </summary>
+            <param name="data">Bytes to convert.</param>
+            <returns>Bytes reinterpreted as a hex number.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.GetCommandLineArgValue(System.String)">
+            <summary>
+            Get a value of a command line argument
+            </summary>
+            <param name="arg">Argument name</param>
+            <returns>Next argument after the given argument name. If not found, returns null.</returns>
+        </member>
+        <member name="M:RedLoader.Utility.TryParseAssemblyName(System.String,System.Reflection.AssemblyName@)">
+            <summary>
+                Try to parse given string as an assembly name
+            </summary>
+            <param name="fullName">Fully qualified assembly name</param>
+            <param name="assemblyName">Resulting <see cref="T:System.Reflection.AssemblyName" /> instance</param>
+            <returns><c>true</c>, if parsing was successful, otherwise <c>false</c></returns>
+            <remarks>
+                On some versions of mono, using <see cref="M:System.Reflection.Assembly.GetName" /> fails because it runs on unmanaged side
+                which has problems with encoding.
+                Using <see cref="T:System.Reflection.AssemblyName" /> solves this by doing parsing on managed side instead.
+            </remarks>
+        </member>
+        <member name="M:RedLoader.Utility.GetUniqueFilesInDirectories(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+                Gets unique files in all given directories. If the file with the same name exists in multiple directories,
+                only the first occurrence is returned.
+            </summary>
+            <param name="directories">Directories to search from.</param>
+            <param name="pattern">File pattern to search.</param>
+            <returns>Collection of all files in the directories.</returns>
+        </member>
+        <member name="M:RedLoader.Coroutines.Start(System.Collections.IEnumerator)">
+            <summary>
+            Start a new coroutine.<br />
+            Coroutines are called at the end of the game Update loops.
+            </summary>
+            <param name="routine">The target routine</param>
+            <returns>An object that can be passed to Stop to stop this coroutine</returns>
+        </member>
+        <member name="M:RedLoader.Coroutines.Stop(UnityEngine.Coroutine)">
+            <summary>
+            Stop a currently running coroutine
+            </summary>
+            <param name="coroutineToken">The coroutine to stop</param>
+        </member>
+        <member name="M:RedLoader.MelonEventBase`1.Subscribe(`0,System.Int32,System.Boolean)">
+            <summary>
+            Subscribe to the event
+            </summary>
+            <param name="action">Callback for the event</param>
+            <param name="priority">Order of the callback, higher will be called after lower priorities</param>
+            <param name="unsubscribeOnFirstInvocation">Automatically unsubscribe after being called once</param>
+        </member>
+        <member name="T:RedLoader.Pastel.ConsoleExtensions">
+            <summary>
+            Controls colored console output by <see langword="Pastel"/>.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Pastel.ConsoleExtensions.Enable">
+            <summary>
+            Enables any future console color output produced by Pastel.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Pastel.ConsoleExtensions.Disable">
+            <summary>
+            Disables any future console color output produced by Pastel.
+            </summary>
+        </member>
+        <member name="M:RedLoader.Pastel.ConsoleExtensions.Pastel(System.String,System.Drawing.Color)">
+            <summary>
+            Returns a string wrapped in an ANSI foreground color code using the specified color.
+            </summary>
+            <param name="input">The string to color.</param>
+            <param name="color">The color to use on the specified string.</param>
+        </member>
+        <member name="M:RedLoader.Pastel.ConsoleExtensions.Pastel(System.String,System.String)">
+            <summary>
+            Returns a string wrapped in an ANSI foreground color code using the specified color.
+            </summary>
+            <param name="input">The string to color.</param>
+            <param name="hexColor">The color to use on the specified string.<para>Supported format: [#]RRGGBB.</para></param>
+        </member>
+        <member name="M:RedLoader.Pastel.ConsoleExtensions.PastelBg(System.String,System.Drawing.Color)">
+            <summary>
+            Returns a string wrapped in an ANSI background color code using the specified color.
+            </summary>
+            <param name="input">The string to color.</param>
+            <param name="color">The color to use on the specified string.</param>
+        </member>
+        <member name="M:RedLoader.Pastel.ConsoleExtensions.PastelBg(System.String,System.String)">
+            <summary>
+            Returns a string wrapped in an ANSI background color code using the specified color.
+            </summary>
+            <param name="input">The string to color.</param>
+            <param name="hexColor">The color to use on the specified string.<para>Supported format: [#]RRGGBB.</para></param>
+        </member>
+        <member name="T:UnityInjector.ConsoleUtil.SafeConsole">
+            <summary>
+                Console class with safe handlers for Unity 4.x, which does not have a proper Console implementation
+            </summary>
+        </member>
+        <member name="M:Doorstop.Entrypoint.Start">
+            <summary>
+                The main entrypoint of Redloader, called from Doorstop.
+            </summary>
+        </member>
+        <member name="M:SUI.Observable`1.CallValueChanged">
+            <summary>
+            Used to trigger all events.
+            </summary>
+        </member>
+        <member name="M:SUI.Observable`1.RemoveEvents">
+            <summary>
+            Removes all event listeners.
+            </summary>
+        </member>
+        <member name="M:SUI.ObservableExtensions.ToObservable``1(RedLoader.ConfigEntry{``0},System.Boolean)">
+            <summary>
+            Creates a new observable with the config value.
+            Also registers <see cref="E:SUI.Observable`1.OnValueChanged"/> so that the config entry is updated when the observalble value changes.
+            </summary>
+            <param name="configEntry"></param>
+            <param name="twoWay">If true updates the observable when the config entry changes</param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

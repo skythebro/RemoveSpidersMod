@@ -1,0 +1,1436 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SonsSdk</name>
+    </assembly>
+    <members>
+        <member name="T:SonsSdk.AssetLoaders">
+            <summary>
+            Utilities for addressables
+            </summary>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadAsset``1(System.String)">
+            <summary>
+            Load an asset from addressables
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadPrefab(System.String)">
+            <summary>
+            Load a gameobject from addressables
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.InstantiatePrefab(System.String)">
+            <summary>
+            Load and instantiate a gameobject from addressables
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadBundleFromAssembly(System.Reflection.Assembly,System.String)">
+            <summary>
+            Load an asset bundle from the calling assembly. The name will automatically be prefixed with the assembly name.
+            </summary>
+            <param name="assembly">The assembly to load the bundle from</param>
+            <param name="name">The path of the resource you wish to load</param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+            <example>LoadFromAssembly("Resources.bundle")</example>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadDataFromAssembly(System.Reflection.Assembly,System.String)">
+            <summary>
+            Load data from the calling assembly. The name will automatically be prefixed with the assembly name.
+            </summary>
+            <param name="assembly">The assembly to get the data from</param>
+            <param name="name">The path of the resource you wish to load</param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+            <example>LoadFromAssembly("Resources.bundle")</example>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadTexture(System.Byte[])">
+            <summary>
+            Load a texture from a byte buffer
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadTexture(System.String)">
+            <summary>
+            Load a texture from a file
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.LoadTextureFromAssembly(System.Reflection.Assembly,System.String)">
+            <summary>
+            Load a texture from a file in the calling assembly. The name will automatically be prefixed with the assembly name.
+            </summary>
+            <param name="assembly">The assembly to load the texture from</param>
+            <param name="path"></param>
+            <example>LoadTextureFromAssembly("Resources.MyTexture.png")</example>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.MapBundleToFile(System.Byte[],System.Type)">
+            <summary>
+            Maps the contents of an asset bundle to a static class. The name of the property must match the name of the asset in the bundle.
+            </summary>
+            <param name="bundleData">The loaded bundle</param>
+            <param name="mapFileType">The class to map the asset bundle contents to</param>
+        </member>
+        <member name="M:SonsSdk.AssetLoaders.MapBundleToFile``1(System.Byte[])">
+            <inheritdoc cref="M:SonsSdk.AssetLoaders.MapBundleToFile(System.Byte[],System.Type)"/>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.InitializePrefabs">
+            <summary>
+            Make an empty crafting node setup from the lean to structure.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.TryRegister(SonsSdk.Building.ScrewStructureRegistration)">
+            <summary>
+            Register a Gameobject as a prefab for a CraftingNode.
+            The prefab needs to have <see cref="T:Sons.Crafting.Structures.StructureCraftingNodeIngredient"/>s on all meshed that should be buildable.
+            Those will dictate what ingredient you need to built that specific component.
+            The crafting node will be created at game activation. Subscribe to <see cref="F:SonsSdk.Building.CustomBlueprintManager.OnCraftingNodeCreated"/> in order to process it further.
+            </summary>
+            <param name="reg">A structure that holds the prefab, recipe id and recipe name</param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.PrepareBuiltStructure(UnityEngine.GameObject,Sons.Crafting.Structures.StructureRecipe)">
+            <summary>
+            Prepare the built variant of a structure by removing all crafting node specific things like <see cref="T:Sons.Crafting.Structures.StructureCraftingNodeIngredient"/>s.
+            Basically a conversion from blueprint to built (finished) structure.
+            </summary>
+            <param name="built"></param>
+            <param name="recipe"></param>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.AddRecipeToDatabase(Sons.Crafting.Structures.StructureRecipe)">
+            <summary>
+            Tries to register a recipe with the recipe database.
+            Checks if an instance of the <see cref="T:Sons.Crafting.Structures.StructureCraftingSystem"/> exists and if the recipe isn't already registered.
+            </summary>
+            <param name="recipe"></param>
+            <returns>True if the recipe got registered successfully</returns>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.CreateNewRecipe(System.Int32,System.String,Sons.Crafting.Structures.StructureCraftingNode,UnityEngine.GameObject)">
+            <summary>
+            Creates and registers a new recipe.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="node"></param>
+            <param name="built"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.ProcessFreeformStructure(UnityEngine.Transform)">
+            <summary>
+            Turn a transform containing <see cref="T:Construction.StructureElement"/>s into a ghost and add ingredient descriptors.
+            </summary>
+            <param name="freeformStructure"></param>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.ProcessStructure(UnityEngine.Transform,System.Int32)">
+            <summary>
+            Turn a transform containing <see cref="T:UnityEngine.MeshRenderer"/>s into a ghost and add ingredient descriptors.
+            Each renderer will be treated as a separate ingredient.
+            </summary>
+            <param name="structureRoot"></param>
+            <param name="itemId">The item id for the ingredients.</param>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.GetIngredients(UnityEngine.Transform)">
+            <summary>
+            Get all <see cref="T:Sons.Crafting.Structures.StructureCraftingNodeIngredient"/>s in a transform and its children.
+            </summary>
+            <param name="structureRoot"></param>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.CreateCraftingNode(UnityEngine.Transform,System.Nullable{System.Int32})">
+            <summary>
+            Wraps <see cref="!:transformToWrap"/> with a crafting node setting up all ingredients and ghosts for the structure.
+            <see cref="!:transformToWrap"/> needs to have <see cref="T:Construction.StructureElement"/>s as children.
+            </summary>
+            <param name="transformToWrap"></param>
+            <param name="isFreeform">true for structures composed out of <see cref="T:Construction.StructureElement"/>s</param>
+            <param name="ingredientItemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.InitRecipe(Sons.Crafting.Structures.StructureRecipe)">
+            <summary>
+            Adds a recipe to the database and creates a node prefab if it doesn't exist.
+            </summary>
+            <param name="recipe"></param>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.CreateBookPage(Sons.Crafting.Structures.StructureRecipe,Sons.Crafting.Structures.StructureRecipe,UnityEngine.Texture2D)">
+            <summary>
+            Setup a book page from one or two recipes and the background.
+            Will automatically setup localization for the recipes.
+            </summary>
+            <param name="topRecipe"></param>
+            <param name="bottomRecipe"></param>
+            <param name="background"></param>
+        </member>
+        <member name="M:SonsSdk.Building.CustomBlueprintManager.SetupObjectAsCraftingNode(SonsSdk.Building.ScrewStructureRegistration)">
+            <summary>
+            Creates a crafting node, prepares a built prefab, sets up recipe ingredients, creates a recipe and registers it with the database.
+            If the recipe already exists (the object has already been processes) this method ONLY registers the recipe without processing anything.
+            </summary>
+            <param name="reg"></param>
+        </member>
+        <member name="M:SonsSdk.CommonExtensions.FindGet``1(UnityEngine.GameObject,System.String)">
+            <summary>
+            Gets a transform by path and return a component on it
+            </summary>
+            <param name="go"></param>
+            <param name="name">The path of the transform to get</param>
+            <typeparam name="T">The type of the component to get</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.CommonExtensions.FindGet``1(UnityEngine.Transform,System.String)">
+            <summary>
+            Gets a transform by path and return a component on it
+            </summary>
+            <param name="tr"></param>
+            <param name="name">The path of the transform to get</param>
+            <typeparam name="T">The type of the component to get</typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:SonsSdk.CustomState">
+            <summary>
+            Class to create custom states i.e. temporarily disable (override) some inputs and have some update function.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.DebugTools.Inspect(System.Object,System.Boolean)">
+            <summary>
+            Will inspect an object in Unity Explorer if installed.
+            </summary>
+            <param name="obj"></param>
+            <param name="showExporer">if true opens Unity Explorer too</param>
+        </member>
+        <member name="T:SonsSdk.DebugTools.LineDrawer">
+            <summary>
+            Class for drawing a line in the world.
+            The constructor will create a new line renderer.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.DebugTools.LineDrawer.SetLine(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Sets the line start and end positions.
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+        </member>
+        <member name="M:SonsSdk.DebugTools.LineDrawer.SetPosition(UnityEngine.Vector3)">
+            <summary>
+            Sets the position of the line renderer gameobject.
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:SonsSdk.GameCommands.ToggleGrassCommand(System.String)">
+            <summary>
+            Toggles the visibility of grass
+            </summary>
+            <param name="args"></param>
+            <command>togglegrass</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.FreecamCommand(System.String)">
+            <summary>
+            Freecam mode without "exiting" the player
+            </summary>
+            <param name="args"></param>
+            <command>xfreecam</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.CancelBlueprintsCommand(System.String)">
+            <summary>
+            Cancel all blueprints in a radius
+            </summary>
+            <param name="args"></param>
+            <command>cancelblueprints</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.FinishBlueprintsCommand(System.String)">
+            <summary>
+            Finish all blueprints in a radius
+            </summary>
+            <param name="args"></param>
+            <command>finishblueprints</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.NoForestCommand(System.String)">
+            <summary>
+            Removes trees, bushes and (including billboards) for debugging purposes
+            </summary>
+            <param name="args"></param>
+            <command>noforest</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.ClearPickupsCommand(System.String)">
+            <summary>
+            Clears all pickups in a radius
+            </summary>
+            <param name="args"></param>
+            <command>clearpickups</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.GoToPickup(System.String)">
+            <summary>
+            Go to a pickup by name (picks the first one that contains the name). Useful for finding story items.
+            </summary>
+            <param name="args"></param>
+            <command>gotopickup</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.GhostPlayerCommand(System.String)">
+            <summary>
+            Will make the ai ignore the player.
+            </summary>
+            <param name="args"></param>
+            <command>aighostplayer</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.SaveConsolePos(System.String)">
+            <summary>
+            Save the console position to the config.
+            </summary>
+            <param name="args"></param>
+            <command>saveconsolepos</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.VirginiaSentiment(System.String)">
+            <summary>
+            Add sentiment to virginia
+            </summary>
+            <param name="args"></param>
+            <command>virginiasentiment</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.VirginiaVisit(System.String)">
+            <summary>
+            Invokes a virginia visit event
+            </summary>
+            <param name="args"></param>
+            <command>virginiavisit</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.DumpCommand(System.String)">
+            <summary>
+            Dump various data from the game. dump [items, characters, prefabs]
+            </summary>
+            <param name="args"></param>
+            <command>dump</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.PlayCutsceneCommand(System.String)">
+            <summary>
+            Play a cutscene by name
+            </summary>
+            <param name="args"></param>
+            <command>playcutscene</command>
+        </member>
+        <member name="M:SonsSdk.GameCommands.DumpBoltSerializersCommand(System.String)">
+            <summary>
+            Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing)
+            </summary>
+            <param name="args"></param>
+            <command>toggleshadows</command>
+        </member>
+        <member name="P:SonsSdk.GameState.IsInGame">
+            <summary>
+            Returns true if the player is in the game world.
+            </summary>
+        </member>
+        <member name="P:SonsSdk.GameState.IsPlayerControllable">
+            <summary>
+            returns true if the player is not in the crafting book, console etc.
+            Useful for example when a hotkey shouldn't be accidentally triggered in the console.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.GlobalInput.RegisterKey(UnityEngine.KeyCode,System.Action)">
+            <summary>
+            Register a key that will be polled every frame. The action will be invoke if the key is pressed during that frame.
+            </summary>
+            <param name="key"></param>
+            <param name="action"></param>
+            <returns>False if the key is already registered</returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.InitInventoryModelReplacement(UnityEngine.GameObject,System.Int32,System.Collections.Generic.List{UnityEngine.GameObject}@)">
+            <summary>
+            Replace a model in the inventory with a new prefab.
+            </summary>
+            <param name="prefab">The prefab that gets instantiated for each layout item.</param>
+            <param name="itemId">The item id of the item to replace.</param>
+            <param name="instantiated">A list of the objects that got instantiated.</param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SonsSdk.ItemTools.CreateAndRegisterItem(System.Int32,System.String,System.Int32,UnityEngine.Texture2D,System.String)">
+            <summary>
+            Create a new item and register it in the item database.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.ItemTools.ItemBuilder.#ctor(UnityEngine.GameObject,Sons.Items.Core.ItemData,System.Boolean)">
+            <summary>
+            </summary>
+            <param name="prefab">The prefab to instantiate for each item</param>
+            <param name="item">The item for which to build content</param>
+            <param name="isOneToOne">If one visual element = 1 item</param>
+        </member>
+        <member name="M:SonsSdk.ItemTools.ItemBuilder.AddInventoryItem(UnityEngine.Vector3[])">
+            <summary>
+            Adds an inventory layout to the inventory for the item.
+            </summary>
+            <param name="positions">first position is the group position (relative to inventory), every other position is and additional layout item relative to the group.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.ItemBuilder.AddIngredientItem(UnityEngine.Vector3[])">
+            <summary>
+            Adds an ingredient layout to the inventory for the item.
+            Make sure there exist at least on recipe with that item as an ingredient, otherwise the game bugs out.
+            </summary>
+            <param name="positions">first position is the group position (relative to the crafting mat), every other position is and additional layout item relative to the group.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.ItemBuilder.AddCraftingResultItem(UnityEngine.Vector3[])">
+            <summary>
+            Adds an crafting result layout to the inventory for the item.
+            </summary>
+            <param name="positions">first position is the group position (relative to the crafting mat), every other position is and additional layout item relative to the group.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.ItemBuilder.SetupHeld(System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3})">
+            <summary>
+            Adds a held locator to the player so the item can be held.
+            Make sure the Item has a HeldPrefab since this will be instantiated into the locator.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.ItemBuilder.SetupPickup(UnityEngine.GameObject)">
+            <summary>
+            Setup a pickup of the item.
+            </summary>
+            <param name="prefab">The model prefab to be used for the pickup</param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.RecipeBuilder.Animation(System.String)">
+            <summary>
+            Sets the animation for crafting the item. Use <see cref="T:SonsSdk.ItemTools.CraftAnimations"/>.
+            </summary>
+            <param name="animationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.RecipeBuilder.BuildRecipe">
+            <summary>
+            Builds a recipe with the given ingredients and results.
+            If you want to add the recipe to the recipe database, use <see cref="M:SonsSdk.ItemTools.RecipeBuilder.BuildAndAdd"/>
+            </summary>
+            <returns>The built recipe</returns>
+        </member>
+        <member name="M:SonsSdk.ItemTools.RecipeBuilder.BuildAndAdd">
+            <summary>
+            Builds a recipe with the given ingredients and results and adds it to the recipe database.
+            </summary>
+            <returns>The built recipe</returns>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Id">
+            <summary>
+            Unique id of the mod
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Name">
+            <summary>
+            Name of the mod
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Author">
+            <summary>
+            Author of the mod
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Version">
+            <summary>
+            Version of the mod
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Description">
+            <summary>
+            Description of the mod
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.GameVersion">
+            <summary>
+            Game version the mod is compatible with
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.LoaderVersion">
+            <summary>
+            Loader version the mod is compatible with
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Platform">
+            <summary>
+            Where this mod is able to run. Possible values: "Client", "Server", "Universal".
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Dependencies">
+            <summary>
+            Optional. List of dependencies of the mod
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.LogColor">
+            <summary>
+            Optional. The hex string color in which the mod's name will be displayed in the console
+            </summary>
+            <example>#ffffff</example>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Url">
+            <summary>
+            Optional. Download url of the mod.
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Priority">
+            <summary>
+            Optional. Priority of the mod.
+            </summary>
+        </member>
+        <member name="P:SonsSdk.ManifestData.Type">
+            <summary>
+            Type of the assembly. Possible values: "Mod", "Library".
+            </summary>
+        </member>
+        <member name="M:SonsSdk.ModInputCache.SetScope(RedLoader.KeybindConfigEntry,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Set when the action can trigger. If <paramref name="needsPlayerControllable"/> is true, set the other two options to false as they are automatically checked.
+            </summary>
+            <param name="needsInGame">Does the player need to be in a world</param>
+            <param name="ignoreInConsole">Don't trigger the action in the console</param>
+            <param name="needsPlayerControllable">Don't trigger the action in the console, book, cutscene etc. (uses LocalPlayer.IsInWorld)</param>
+        </member>
+        <member name="M:SonsSdk.ModInputCache.Notify(RedLoader.KeybindConfigEntry,System.Action,System.Action)">
+            <summary>
+            Registers a callback for the "Performed" event of the input action.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.ModInputCache.RemoveNotify(RedLoader.KeybindConfigEntry,System.Action,System.Action)">
+            <summary>
+            Removes a previously registered callback for the "Performed" event of the input action.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.ModKeybind.Notify(System.Action,System.Action)">
+            <summary>
+            Registers a callback for the "Performed" event of the input action.
+            </summary>
+            <param name="performedAction"></param>
+            <param name="releasedAction"></param>
+        </member>
+        <member name="M:SonsSdk.ModKeybind.RemoveNotify(System.Action,System.Action)">
+            <summary>
+            Removes a previously registered callback for the "Performed" event of the input action.
+            </summary>
+            <param name="performedAction"></param>
+        </member>
+        <member name="M:SonsSdk.ModKeybind.SetScope(System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Set when the action can trigger. If <paramref name="needsPlayerControllable"/> is true, set the other two options to false as they are automatically checked.
+            </summary>
+            <param name="needsInGame">Does the player need to be in a world</param>
+            <param name="ignoreInConsole">Don't trigger the action in the console</param>
+            <param name="needsPlayerControllable">Don't trigger the action in the console, book, cutscene etc. (uses LocalPlayer.IsInWorld)</param>
+        </member>
+        <member name="M:SonsSdk.Networking.EntityManager.RegisterPrefab(BoltEntity,System.String)">
+            <summary>
+            Register a BoltEntity to Bolt.
+            Optionally specify a serializer if the BoltEntity doesn't already have that filled in (See <see cref="T:SonsSdk.Networking.BoltFactories"/>).
+            </summary>
+            <param name="entity">The BoltEntity to register</param>
+            <param name="serializer">The optional serializer. If you don't use the overload here, make sure to assign it somewhere else before</param>
+        </member>
+        <member name="M:SonsSdk.Networking.EntityManager.RegisterPrefab(UnityEngine.GameObject,System.String)">
+            <summary>
+            Register a BoltEntity to Bolt by getting the component from a GameObject.
+            Optionally specify a serializer if the BoltEntity doesn't already have that filled in (See <see cref="T:SonsSdk.Networking.BoltFactories"/>).
+            </summary>
+            <param name="go">The GameObject with the BoltEntity on it.</param>
+            <param name="serializer">The optional serializer. If you don't use the overload here, make sure to assign it somewhere else before</param>
+        </member>
+        <member name="M:SonsSdk.Networking.NetUtils.SendChatMessage(Bolt.NetworkId,System.String,System.String,BoltConnection)">
+            <summary>
+            Send a chat message to everyone or a specific connection. THIS IS ONLY POSSIBLE IF YOU ARE A SERVER (either dedicated server or host in coop).
+            </summary>
+            <param name="sender"></param>
+            <param name="message"></param>
+            <param name="color"></param>
+            <param name="receiver"></param>
+        </member>
+        <member name="E:SonsSdk.Networking.Packets.OnChatReceived">
+            <summary>
+            Gets called when a chat message arrives. Returning true means you handled the message and none of the other handlers get called.
+            If you just want to read the message, return false so the chat event gets sent to all other handlers as well.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.Networking.Packets.HandlePacket(UdpKit.UdpPacket,BoltConnection)">
+            <summary>
+            Send it to the matching NetEvent. Also relay it to the clients / target BoltConnection if necessary.
+            </summary>
+            <param name="packet"></param>
+            <param name="fromConnection"></param>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnGameStart">
+            <summary>
+            Called when the player spawns in the world and gains control
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnSdkInitialized">
+            <summary>
+            Called when the sdk has been fully initialized
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnSdkLateInitialized">
+            <summary>
+            Called after all <see cref="F:SonsSdk.SdkEvents.OnSdkInitialized"/> registrations have been invoked.
+            Mostly used internally. Only use this when you absolutely need to make sure that all SdkInitialized registrations have ran.
+            Otherwise just use <see cref="F:SonsSdk.SdkEvents.OnSdkInitialized"/>
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnInWorldUpdate">
+            <summary>
+            Called on update when the player is in the world
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnAfterSpawn">
+            <summary>
+            Called on the first <see cref="F:SonsSdk.SdkEvents.OnInWorldUpdate"/> tick
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnItemPickup">
+            <summary>
+            Called when the player picks up an item
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnItemCrafted">
+            <summary>
+            Called when the player crafts an item
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnItemConsumed">
+            <summary>
+            Called when the player consumes an item
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnArmorEquipped">
+            <summary>
+            Called when the player equips some armor
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.BeforeSaveLoading">
+            <summary>
+            Called before serializing the save game (i.e. saving a save)
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.AfterSaveLoading">
+            <summary>
+            Called after serializing the save game. (i.e. saving a save)
+            Returns if it should only save the player (i.e. saveGameType = MultiplayerClient)
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.BeforeLoadSave">
+            <summary>
+            Called before deserializing the save game (i.e. loading a save)
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.AfterLoadSave">
+            <summary>
+            Called after deserializing the save game (i.e. loading a save)
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnGameActivated">
+            <summary>
+            Called on the fith activation sequence when the game mode is initialized.
+            This should be used for general world modifications.
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnWorldSimActorAdded">
+            <summary>
+            Called when a world sim actor has been added to the world
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnWorldSimActorRemoved">
+            <summary>
+            Called when a world sim actor has been removed from the world
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnWorldExited">
+            <summary>
+            Called when the player exits to main menu
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SdkEvents.OnCheatsEnabledChanged">
+            <summary>
+            Called when cheats get toggled. Also gets called when receiving the new cheats state from the multiplayer server.
+            This event is always getting called when joining a multiplayer server with the servers setting.
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SonsMod.OnWorldUpdatedCallback">
+            <summary>
+            Method that gets called on update but only when in the world.
+            </summary>
+        </member>
+        <member name="F:SonsSdk.SonsMod.OnCommandsRegisteredCallback">
+            <summary>
+            Gets called after all commands have been registered.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SonsMod.OnSceneWasLoaded(System.Int32,System.String)">
+            <summary>
+                Runs when a new Scene is loaded.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SonsMod.OnSceneWasInitialized(System.Int32,System.String)">
+            <summary>
+                Runs once a Scene is initialized.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SonsMod.OnSceneWasUnloaded(System.Int32,System.String)">
+            <summary>
+                Runs once a Scene unloads.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SonsMod.OnGameStart">
+            <summary>
+            Runs when the game scene is loaded (right before the player gains control).
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SonsMod.OnSdkInitialized">
+            <summary>
+            Runs when the SDK is fully initialized. SDK usage like creation of custom UI should be done here.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SonsMod.OnSonsSceneInitialized(SonsSdk.ESonsScene)">
+            <summary>
+            Runs when a scene is initialized. But with an enum parameter to check for sons scenes.
+            </summary>
+            <param name="sonsScene"></param>
+        </member>
+        <member name="M:SonsSdk.SonsTools.ShowMessage(System.String,System.Single)">
+            <summary>
+            Show a message in the bottom left corner of the screen for a certain duration.
+            </summary>
+            <param name="message"></param>
+            <param name="duration"></param>
+        </member>
+        <member name="M:SonsSdk.SonsTools.MenuMode(System.Boolean)">
+            <summary>
+            Toggle menu mode. Stops all keyboard inputs and shows the cursor.
+            </summary>
+            <param name="enable"></param>
+        </member>
+        <member name="M:SonsSdk.SonsTools.GetPositionInFrontOfPlayer(System.Single)">
+            <summary>
+            Get a vector3 position in from of the player
+            </summary>
+            <param name="distance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SonsTools.GetPositionInFrontOfPlayer(System.Single,System.Single)">
+            <summary>
+            Get a vector3 position in from of the player
+            </summary>
+            <param name="distance"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SonsTools.GetPlayerDistance(UnityEngine.Vector3)">
+            <summary>
+            Calculate the distance between the player and a position
+            </summary>
+            <param name="position"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SonsTools.IsPlayerInDistance(UnityEngine.Vector3,System.Single)">
+            <summary>
+            Check if the player is under a certain distance to a position
+            </summary>
+            <param name="position"></param>
+            <param name="distance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SonsTools.TryGetSaveGameIds(System.Collections.Generic.List{System.UInt32}@,Sons.Save.SaveGameType)">
+            <summary>
+            Get all savegame ids for a specific savegame type
+            </summary>
+            <param name="saveIds"></param>
+            <param name="saveGameType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SonsTools.GetLatestSaveGameId(Sons.Save.SaveGameType)">
+            <summary>
+            Gets the id of the latest savegame (by last write time)
+            </summary>
+            <param name="saveGameType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SonsUiTools.RegisterCustomLinkUi(SUI.SContainerOptions,System.String,Sons.Gui.UiElement.UiElementTransformType,System.Int32)">
+            <summary>
+            Registers a custom ui to the sons link ui manager. Should be called in the OnSdkInitialized callback.
+            </summary>
+            <param name="container"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:SonsSdk.SonsUiTools.RegisterCustom2DUi(SUI.SContainerOptions,System.String,Sons.Gui.UiElement.UiElementTransformType)">
+            <summary>
+            Registers a custom 2d ui to the sons link ui manager. Should be called in the OnSdkInitialized callback.
+            </summary>
+            <param name="container"></param>
+            <param name="id"></param>
+        </member>
+        <member name="P:SonsSdk.SoundTools.MasterVolume">
+            <summary>
+            The master volume in the game settings.
+            </summary>
+        </member>
+        <member name="P:SonsSdk.SoundTools.MusicVolume">
+            <summary>
+            The music volume in the game settings. Multiplied by the master volume.
+            </summary>
+        </member>
+        <member name="P:SonsSdk.SoundTools.SfxVolume">
+            <summary>
+            The sfx volume in the game settings. Multiplied by the master volume.
+            </summary>
+        </member>
+        <member name="P:SonsSdk.SoundTools.VoiceVolume">
+            <summary>
+            The voice volume in the game settings. Multiplied by the master volume.
+            </summary>
+        </member>
+        <member name="M:SonsSdk.SoundTools.RegisterSound(System.String,System.String,System.Boolean)">
+            <summary>
+            Register a sound to the fmod system from a file. You can play it with <see cref="M:SonsSdk.SoundTools.PlaySound(System.String,System.Nullable{System.Single},System.Nullable{System.Single})"/>.
+            </summary>
+            <param name="id">The id of the sound by which you can play it later</param>
+            <param name="filepath">The file path of the sound</param>
+        </member>
+        <member name="M:SonsSdk.SoundTools.RegisterSound(System.String,System.Byte[],System.Boolean)">
+            <summary>
+            Register a sound to the fmod system from memory. You can play it with <see cref="M:SonsSdk.SoundTools.PlaySound(System.String,System.Nullable{System.Single},System.Nullable{System.Single})"/>.
+            </summary>
+            <param name="id">The id of the sound by which you can play it later</param>
+            <param name="data">the data of the sound file</param>
+        </member>
+        <member name="M:SonsSdk.SoundTools.LoadBank(System.String,System.Boolean,FMOD.Studio.LOAD_BANK_FLAGS)">
+            <summary>
+            Loads and registeres a bank file
+            </summary>
+            <param name="path">The path of the bank file (Make sure the {name}.strings.bank file is also present at that location)</param>
+            <param name="loadStringsFile">If the .strings.bank file should also be loaded. If true make sure it exists beside the .bank file</param>
+            <param name="flags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SoundTools.LoadBank(System.Byte[],System.Byte[],FMOD.Studio.LOAD_BANK_FLAGS)">
+            <summary>
+            Loads and registeres a bank from a byte buffer
+            </summary>
+            <param name="data">The .bank data</param>
+            <param name="stringsData">The .strings.bank data</param>
+            <param name="flags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SoundTools.PlaySound(System.String,System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>
+            Play a registered sound
+            </summary>
+            <param name="id">The id you specified in <see cref="M:SonsSdk.SoundTools.RegisterSound(System.String,System.String,System.Boolean)"/></param>
+            <param name="volume">The volume of the sound. If nothing is specified the settings music volume is used</param>
+            <param name="pitch">The pitch of the sound. 1 is normal pitch</param>
+            <returns>A channel which let's you control and stop the sound again</returns>
+        </member>
+        <member name="M:SonsSdk.SoundTools.PlaySound(System.String,UnityEngine.Vector3,System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>
+            Play a registered sound
+            </summary>
+            <param name="id">The id you specified in <see cref="M:SonsSdk.SoundTools.RegisterSound(System.String,System.String,System.Boolean)"/></param>
+            <param name="pos">The position at which to play the sound</param>
+            <param name="maxDist">The maximum distance at which the sound is still audible</param>
+            <param name="volume">The volume of the sound. If nothing is specified the settings music volume is used</param>
+            <param name="pitch">The pitch of the sound. 1 is normal pitch</param>
+            <returns>A channel which let's you control and stop the sound again</returns>
+        </member>
+        <member name="M:SonsSdk.SoundTools.PlaySound(FMODCustom.Sound,System.Single,System.Nullable{System.Single})">
+            <summary>
+            Gets the sound by id.
+            </summary>
+            <param name="sound"></param>
+            <param name="volume"></param>
+            <param name="pitch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.SoundTools.SetupRedirect(System.String,System.String)">
+            <summary>
+            Redirects a registered fmod event to another event
+            </summary>
+            <param name="srcEvent">The original event</param>
+            <param name="dstEvent">The event that should be played instead</param>
+        </member>
+        <member name="M:SonsSdk.SoundTools.BindSound(UnityEngine.GameObject,System.String)">
+            <summary>
+            Bind a sound to a gameobject. The sound will be played at the position of the gameobject.
+            </summary>
+            <param name="go">The gameobject to bind the sound to</param>
+            <param name="id">The id of the sound to play</param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.UnityUtils.ToSprite(UnityEngine.Texture2D)">
+            <summary>
+            Convert a texture to a sprite. This is a slow operation. Make sure to cache the result.
+            </summary>
+            <param name="tex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.UnityUtils.AddOrGet``1(UnityEngine.GameObject)">
+            <summary>
+            Get a component or adds it to the gameobject if it doesn't exist
+            </summary>
+            <param name="go"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.UnityUtils.WorldPosToTextureSpace(UnityEngine.Vector3,UnityEngine.Terrain,System.Int32)">
+            <summary>
+            Convert a world position to a position on a terrain texture in relation to a specified texture size.
+            </summary>
+            <param name="transformPosition"></param>
+            <param name="terrain"></param>
+            <param name="textureSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.UnityUtils.TextureSpaceToWorldPos(UnityEngine.Vector2,UnityEngine.Terrain,System.Int32)">
+            <summary>
+            Convert a position on a terrain texture to a world position in relation to a specified texture size.
+            </summary>
+            <param name="textureSpace"></param>
+            <param name="terrain"></param>
+            <param name="textureSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SonsSdk.UnityUtils.PrintHierarchy(UnityEngine.Transform,System.Int32)">
+            <summary>
+            Prints a <see cref="T:UnityEngine.Transform"/> hierarchy. Useful for debugging on the server where no GUI is available.
+            </summary>
+            <param name="transform"></param>
+            <param name="level"></param>
+        </member>
+        <member name="T:SUI.MenuAttacher">
+            <summary>
+            class for attaching custom SUI UIs to game menus
+            </summary>
+        </member>
+        <member name="M:SUI.SContainerOptions.BindVisibility(SUI.Observable{System.Boolean},System.Boolean)">
+            <summary>
+            Binds the visibility of the container to an observable boolean value.
+            </summary>
+            <param name="observable">The observable boolean value to bind to.</param>
+            <param name="toggleGameObject">Whether to toggle the GameObject's active state based on the observable value or the canvasgroup alpha.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.BindVisibilityInverted(SUI.Observable{System.Boolean},System.Boolean)">
+            <summary>
+            Binds the visibility of the container to an observable boolean value.
+            </summary>
+            <param name="observable">The observable boolean value to bind to.</param>
+            <param name="toggleGameObject">Whether to toggle the GameObject's active state based on the observable value or the canvasgroup alpha.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Horizontal(System.Single,System.String)">
+            <summary>
+            Configures the container's layout as horizontal with optional spacing and layout mode.
+            </summary>
+            <param name="spacing">Optional. The amount of spacing between elements.</param>
+            <param name="mode">Optional. The layout mode to apply (e.g., flexible, fixed, etc.).</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Vertical(System.Single,System.String)">
+            <summary>
+            Configures the container's layout as vertical with optional spacing and layout mode.
+            </summary>
+            <param name="spacing">Optional. The amount of spacing between elements.</param>
+            <param name="mode">Optional. The layout mode to apply (e.g., flexible, fixed, etc.).</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.LayoutChildAlignment(UnityEngine.TextAnchor)">
+            <summary>
+            Sets the alignment of child elements within the container's horizontal or vertical layout.
+            </summary>
+            <param name="alignment">The alignment for child elements.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.ChildControl(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>
+            Configures whether child elements in the container's horizontal or vertical layout should control their width and/or height.
+            </summary>
+            <param name="width">Optional. Set to true to enable child width control, false to disable. Set to null to keep the current setting.</param>
+            <param name="height">Optional. Set to true to enable child height control, false to disable. Set to null to keep the current setting.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.ChildExpand(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>
+            Configures whether child elements in the container's horizontal or vertical layout should expand to fill available space.
+            </summary>
+            <param name="width">Optional. Set to true to enable child width expansion, false to disable. Set to null to keep the current setting.</param>
+            <param name="height">Optional. Set to true to enable child height expansion, false to disable. Set to null to keep the current setting.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.LayoutUseChildScale(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>
+            Configures whether child elements in the container's horizontal or vertical layout should use child scale settings.
+            </summary>
+            <param name="width">Optional. Set to true to enable child width scaling, false to disable. Set to null to keep the current setting.</param>
+            <param name="height">Optional. Set to true to enable child height scaling, false to disable. Set to null to keep the current setting.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.LayoutMode(System.String)">
+            <summary>
+            E = Expand, C = Control.
+            First letter is width, second is height
+            </summary>
+            <param name="mode"></param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Spacing(System.Single)">
+            <summary>
+            Sets the spacing between elements in the container's horizontal or vertical layout.
+            </summary>
+            <param name="spacing">The amount of spacing between elements.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Spacing(System.Single,System.Single)">
+            <summary>
+            Sets the spacing between rows and columns in the container's grid layout.
+            </summary>
+            <param name="spacingRow">The amount of spacing between rows.</param>
+            <param name="spacingCol">The amount of spacing between columns.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Padding(System.Single)">
+            <summary>
+            Sets equal padding for all sides of the container's layout.
+            </summary>
+            <param name="padding">The amount of padding to apply on all sides.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Padding(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Sets padding for the container's layout on all sides individually.
+            </summary>
+            <param name="left">The amount of padding for the left side.</param>
+            <param name="right">The amount of padding for the right side.</param>
+            <param name="top">The amount of padding for the top side.</param>
+            <param name="bottom">The amount of padding for the bottom side.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.PaddingHorizontal(System.Single)">
+            <summary>
+            Sets horizontal padding for the container's layout.
+            </summary>
+            <param name="padding">The amount of horizontal padding to apply.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.PaddingVertical(System.Single)">
+            <summary>
+            Sets vertical padding for the container's layout.
+            </summary>
+            <param name="padding">The amount of vertical padding to apply.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Grid(System.Int32,System.Single)">
+            <summary>
+            Creates a grid layout with the given constraint count and spacing.
+            </summary>
+            <param name="constraintCount">Number of the fixed rows or columns</param>
+            <param name="spacing"></param>
+        </member>
+        <member name="M:SUI.SContainerOptions.CellSize(System.Single,System.Single)">
+            <summary>
+            Sets the cell size of the GridLayoutGroup attached to the root object.
+            </summary>
+            <param name="width">Width of the cell.</param>
+            <param name="height">Height of the cell.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.AutoSize(UnityEngine.UI.ContentSizeFitter.FitMode,UnityEngine.UI.ContentSizeFitter.FitMode)">
+            <summary>
+            Configures automatic sizing for the container using ContentSizeFitter.
+            </summary>
+            <param name="horizontal">The horizontal fitting mode for content.</param>
+            <param name="vertical">The vertical fitting mode for content.</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.AutoSize(System.String)">
+            <summary>
+            M = MinSize, P = PreferredSize.
+            First letter is width, second is height
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SUI.SContainerOptions.Background(UnityEngine.Color,SUI.EBackground,System.Nullable{UnityEngine.UI.Image.Type})">
+            <summary>
+            Sets the background appearance of the container using a solid color and an optional background sprite.
+            </summary>
+            <param name="color">The desired background color.</param>
+            <param name="clean">Flag to determine if the background sprite should be removed (optional).</param>
+        </member>
+        <member name="M:SUI.SContainerOptions.Background(UnityEngine.Sprite,System.Nullable{UnityEngine.Color},UnityEngine.UI.Image.Type)">
+            <summary>
+            Sets the background appearance of the container using a solid color and an optional background sprite.
+            </summary>
+            <param name="sprite"></param>
+            <param name="color">The desired background color.</param>
+            <param name="type"></param>
+        </member>
+        <member name="M:SUI.SContainerOptions.OverrideSorting(System.Int32)">
+            <summary>
+            Gets or adds a canvas and overrides the sorting order of the parent canvas.
+            </summary>
+            <param name="sortingOrder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SettingsRegistry.SettingsEntry.GetElementForEntry(RedLoader.ConfigEntry)">
+            <summary>
+            Gets the ui container for a config entry. The container wraps the option element and the revert button.
+            To get the actual option element use <see cref="M:SUI.SettingsRegistry.SettingsEntry.GetWrappedElementForEntry(RedLoader.ConfigEntry)"/>.
+            </summary>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SettingsRegistry.SettingsEntry.GetWrappedElementForEntry(RedLoader.ConfigEntry)">
+            <summary>
+            Get the option element for a config entry. To get the container use <see cref="M:SUI.SettingsRegistry.SettingsEntry.GetElementForEntry(RedLoader.ConfigEntry)"/>.
+            </summary>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SettingsRegistry.SettingsEntry.SetCharacterLimit(RedLoader.ConfigEntry,System.Int32,System.Boolean)">
+            <summary>
+            Sets the textboxes character limit. Make sure the config entry is a string entry.
+            </summary>
+            <param name="entry"></param>
+            <param name="characterLimit"></param>
+            <param name="disableAutoSizing">Disable auto sizing of the text inside the textbox</param>
+        </member>
+        <member name="M:SUI.SKeybindOptions.BindingInputHeight(System.Single)">
+            <summary>
+            Forces a total height for the keybind container
+            </summary>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUI.GetPrefabs">
+            <summary>
+            Gather all the prefabs
+            </summary>
+        </member>
+        <member name="M:SUI.SUI.BackupPrefabs">
+            <summary>
+            Create a copy of the prefabs
+            </summary>
+        </member>
+        <member name="M:SUI.SUI.PreparePrefabs">
+            <summary>
+            Cleanup and modify the duplicated prefabs
+            </summary>
+        </member>
+        <member name="M:SUI.SUI.RegisterNewPanel(System.String,System.Boolean,System.Nullable{UnityEngine.KeyCode})">
+            <inheritdoc cref="M:SUI.SUI.RegisterNewPanel(System.String,System.Boolean,System.Nullable{UnityEngine.KeyCode})"/>
+        </member>
+        <member name="M:SUI.SUI.RegisterNewPanel(System.String,UnityEngine.Transform,System.Boolean,System.Nullable{UnityEngine.KeyCode})">
+            <summary>
+            Creates a new panel and registers it to the sui system.
+            </summary>
+            <param name="id">The id by which you can manage the panel later. Needs to be unique</param>
+            <param name="parent">The transform to parent the panel to</param>
+            <param name="enableInput">If true enables the mouse and disables game keyboard input once the panel is showing</param>
+            <param name="toggleKey">Optional key by which you can toggle the panel</param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUI.SpriteText(System.String,System.String)">
+            <summary>
+            Get a rich text string for a sprite
+            </summary>
+            <param name="spriteName">Name of the sprite</param>
+            <param name="color">Optional color of the sprite. White by default</param>
+            <returns>A string in the form of &lt;sprite name="sprite" color=#000&gt;</returns>
+        </member>
+        <member name="M:SUI.SUI.WrapColor(System.String,System.String)">
+            <summary>
+            Wraps some text in a rich text color tag
+            </summary>
+            <param name="text">The text to wrap</param>
+            <param name="color">The color of the text</param>
+            <returns>A string in the form of &lt;color=#000&gt;text&lt;/color&gt;</returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.BindVisibility(SUI.Observable{System.Boolean})">
+            <summary>
+            Binds the visibility of the container to an observable boolean value.
+            </summary>
+            <param name="observable">The observable boolean value to bind to.</param>
+        </member>
+        <member name="M:SUI.SUiElement`1.BindVisibilityInverted(SUI.Observable{System.Boolean})">
+            <summary>
+            Binds the visibility of the container to an observable boolean value.
+            </summary>
+            <param name="observable">The observable boolean value to bind to.</param>
+        </member>
+        <member name="M:SUI.SUiElement`1.UnbindVisibility">
+            <summary>
+            Unbinds the visibility of the container from any previously bound observable.
+            </summary>
+        </member>
+        <member name="M:SUI.SUiElement`1.Text(System.String)">
+            <summary>
+            Set the text of the main text object
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.RichText(System.String)">
+            <summary>
+            Set the text of the main text object as rich text
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.FontSize(System.Int32)">
+            <summary>
+            Set the font size of the main text object
+            </summary>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.FontAutoSize(System.Boolean)">
+            <summary>
+            Toggle auto sizing of the main text object
+            </summary>
+            <param name="enabled"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.FontAutoSizeRange(System.Int32,System.Int32)">
+            <summary>
+            Set the auto size range of the text
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.FontColor(UnityEngine.Color)">
+            <summary>
+            Set the font color of the main text object
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Find``1(System.String)">
+            <summary>
+            Finds a child object and returns it as a SUiElement
+            </summary>
+            <param name="path"></param>
+            <typeparam name="TObj"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.MinOffset(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Set the minimum offset of the rect transform
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.MaxOffset(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Set the maximum offset of the rect transform
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Size(System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>
+            Set the size delta of the rect transform
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Size(UnityEngine.Vector2)">
+            <summary>
+            Set the size delta of the rect transform
+            </summary>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Position(System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>
+            Set the anchor position of the rect transform
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Width(System.Single)">
+            <summary>
+            Set the size delta width of the rect transform
+            </summary>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Height(System.Single)">
+            <summary>
+            Set the size delta height of the rect transform
+            </summary>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.PHeight(System.Single)">
+            <summary>
+            Set the preferred height of the layout element
+            </summary>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.PWidth(System.Single)">
+            <summary>
+            Set the preferred width of the layout element
+            </summary>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.MHeight(System.Single)">
+            <summary>
+            Set the minimum height of the layout element
+            </summary>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.MWidth(System.Single)">
+            <summary>
+            Set the minimum width of the layout element
+            </summary>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Margin(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Set the offsets of the rect transform
+            </summary>
+            <param name="top"></param>
+            <param name="right"></param>
+            <param name="bottom"></param>
+            <param name="left"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Margin(System.Single,System.Single)">
+            <summary>
+            Set the offsets of the rect transform
+            </summary>
+            <param name="rightLeft"></param>
+            <param name="topBottom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Margin(System.Single)">
+            <summary>
+            Set the offsets of the rect transform
+            </summary>
+            <param name="padding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.HFill">
+            <summary>
+            Sets the anchor and offsets to fill horizontally
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.VFill">
+            <summary>
+            Sets the anchor and offsets to fill vertically
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.VOffset(System.Single,System.Single)">
+            <summary>
+            Set the horizontal rect offset
+            </summary>
+            <param name="top"></param>
+            <param name="bottom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.HOffset(System.Single,System.Single)">
+            <summary>
+            Set the vertical rect offset
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Pivot(System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>
+            Set the rect pivot
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.TopLeft">
+            <summary>
+            A shortcut to set the pivot to (0,1) and anchor to top left.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.TopLeft(System.Single,System.Single)">
+            <summary>
+            A shortcut to set the pivot to (0,1) and anchor to top left.
+            Additionally sets the position (with the y value negated).
+            This might be easier for users coming from web dev or frameworks like Imgui.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.AspectRatio(UnityEngine.UI.AspectRatioFitter.AspectMode)">
+            <summary>
+            Sets the aspect ratio mode for the objects's aspect ratio fitter.
+            Adds an aspect ratio fitter if none is present.
+            </summary>
+            <param name="mode">The aspect ratio mode to apply.</param>
+        </member>
+        <member name="M:SUI.SUiElement`1.Anchor(SUI.AnchorType)">
+            <summary>
+            Set the rect anchor
+            </summary>
+            <param name="anchorType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Dock(SUI.EDockType)">
+            <summary>
+            An abstraction of the anchor and offset settings
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Ppu(System.Single)">
+            <summary>
+            Sets the pixels per unit multiplier for the object's image.
+            </summary>
+            <param name="ppu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Visible(System.Boolean)">
+            <summary>
+            Set the visibility of the element (by setting the alpha and blocking raycasts)
+            </summary>
+            <param name="visible"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Active(System.Boolean)">
+            <summary>
+            Set the root gameobject to active or inactive
+            </summary>
+            <param name="active"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.Toggle">
+            <summary>
+            Toggle the root gameobject
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`1.OnClick(System.Action)">
+            <summary>
+            Fire an action when the container is clicked (FOR BUTTONS USE .Notify() INSTEAD)
+            </summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`2.Bind(SUI.Observable{`1})">
+            <summary>
+            Bind an observable to the element value
+            </summary>
+            <param name="observable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SUI.SUiElement`2.Unbind">
+            <summary>
+            Unbind the current observable from the element value
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
