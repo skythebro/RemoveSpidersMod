@@ -3,7 +3,7 @@
   "id": "RemoveSpidersMod",
   "author": "You",
   "version": "1.0.0",
-  "description": "A mod that does something.",
+  "description": "Removes spiders and spider webs from the game.",
   "gameVersion": "1.0.0",
   "type": "Mod",
   "url": "..."
